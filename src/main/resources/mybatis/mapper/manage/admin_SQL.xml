@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ship.project_noa.manage.dao.AdminDAO">
+
+    <select id="adminList" parameterType="ship.project_noa.common.dto.PageDTO" resultType="map">
+        select
+            admin_name
+            , admin_id
+            , admin_hp
+            , admin_email
+            , admin_nickname
+            , w_date
+        from
+            admin
+        order by admin_idx desc
+        limit #{offset}, #{recordSize}
+
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            admin
+    </select>
+
+</mapper>

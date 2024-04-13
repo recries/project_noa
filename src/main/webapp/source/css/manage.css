@@ -1,0 +1,155 @@
+
+body {
+    font-size: 16px;
+    margin: 0;
+}
+
+li{
+    list-style-type: none;
+}
+
+/* Header Style */
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 25px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo a {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #ffc107;
+}
+
+input.input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #ccc;
+}
+
+button.button {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+ul.menu {
+    list-style-type: none;
+}
+
+li.menu-item {
+    padding: 10px 0;
+}
+
+a.menu-item {
+    color: #000;
+    text-decoration: none;
+}
+
+section.section {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+}
+
+table.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead.table-head {
+    background-color: #ccc;
+}
+
+th.table-cell, td.table-cell {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+section.section h2.section-title {
+    font-size: 24px;
+}
+
+/* 버튼 디자인 */
+
+.btn_warp{
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #ef1313;
+    border-radius: 0.6em;
+    color: #ef1313;
+    cursor: pointer;
+    display: flex;
+    align-self: center;
+    font-size: 1rem;
+    line-height: 1;
+    margin: 10px;
+    padding: 0.6em 1.2em;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+
+    &:hover,
+    &:focus {
+        color: #fff;
+        outline: 0;
+    }
+}
+
+.cm_btn01 {
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 40px 40px #ef1313 inset;
+    }
+}
+
+.cm_btn02 {
+    border-color: #6565ef;
+    color: #fff;
+    box-shadow: 0 0 20px 20px #6565ef inset, 0 0 0 0 #6565ef;
+    transition: all 150ms ease-in-out;
+
+    &:hover {
+        box-shadow: 0 0 10px 0 #6565ef inset, 0 0 10px 4px #6565ef;
+        color: #6565ef;
+    }
+}

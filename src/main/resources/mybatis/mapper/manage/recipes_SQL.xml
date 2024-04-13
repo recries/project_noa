@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ship.project_noa.manage.dao.RecipesDAO">
+
+    <select id="selectSourceList" parameterType="ship.project_noa.common.dto.PageDTO" resultType="map">
+        select
+            source_idx
+            , source_name
+            , source_taste
+            , source_type
+            , source_content
+        from
+            source
+        order by source_idx desc
+        limit #{offset}, #{recordSize}
+
+    </select>
+
+    <select id="selectCategoryList" parameterType="ship.project_noa.common.dto.PageDTO" resultType="map">
+        select
+            category_idx
+            ,  category_name
+            ,  category_content
+            ,  (select admin_name from admin where admin_idx = writer) as writer
+            ,  w_date
+        from
+            category
+        order by category.category_idx desc
+        limit #{offset}, #{recordSize}
+
+    </select>
+
+    <insert id="insertNewCategory" parameterType="ship.project_noa.manage.dto.RecipesDTO">
+        insert into category
+        (
+          category_name
+        , category_content
+        , writer
+        )
+        value
+            <foreach collection="category" item="item">
+                (
+                  #{item.category_name}
+                , #{item.category_content}
+                , #{session_admin_idx}
+                )
+            </foreach>
+    </insert>
+
+    <insert id="insertNewSource" parameterType="ship.project_noa.manage.dto.RecipesDTO">
+        insert into source
+            (
+                 source_name
+                , source_taste
+                , source_type
+                , source_content
+                , writer
+            )
+        value (
+               #{source_name}
+                , #{source_taste}
+                , #{source_type}
+                , #{source_content}
+                , #{session_admin_idx}
+            )
+
+    </insert>
+
+</mapper>

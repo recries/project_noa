@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ship.project_noa.login.dao.LoginDAO">
+
+    <select id="adminList" parameterType="ship.project_noa.manage.dto.AdminDTO">
+        select * from admin
+	</select>
+
+    <select id="selectLoginAdmin" parameterType="ship.project_noa.manage.dto.AdminDTO" resultType="ship.project_noa.manage.dto.AdminDTO">
+        select
+            admin_idx
+            , admin_name
+            , admin_nickname
+        from
+            admin
+        where
+            admin_id =#{admin_id}
+            and admin_password =#{admin_sha_password}
+
+    </select>
+
+    <insert id="insertAdminInfo" parameterType="ship.project_noa.manage.dto.AdminDTO">
+        insert into admin
+        (
+          admin_id
+        , admin_password
+        , admin_name
+        , admin_hp
+        , admin_nickname
+        , admin_email
+        )
+        values
+            (
+              #{admin_id}
+            , #{admin_sha_password}
+            , #{admin_name}
+            , #{admin_hp}
+            , #{admin_nickname}
+            , #{admin_email}
+            )
+    </insert>
+
+</mapper>
