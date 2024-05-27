@@ -5,53 +5,69 @@
     <meta charset="UTF-8">
     <title>노아</title>
 </head>
+<style type="text/css">
+    .card-text{
+        white-space: break-spaces;
+    }
 
+</style>
 <%@ include file="../../../includeFiles/include_source.jsp"  %>
 <link type="text/css" rel="stylesheet" href="../../../../source/css/manage.css">
-<link type="text/css" rel="stylesheet" href="../../../../source/css/main.css">
 
 <body>
 <%@ include file="../../includeJsp/manageHeader.jsp" %>
 <body>
-<main class="main">
-    <section class="section">
+<main class="container mt-5">
+    <section>
         <form id="deleteCategoryForm" method="post" target="hiddenframe">
-        <h2 class="section-title">레시피 카테고리</h2>
-        <table class="table">
-            <thead class="table-head">
-            <tr class="table-row">
-                <th class="table-cell allClick">선택</th>
-                <th class="table-cell">이름</th>
-                <th class="table-cell">종류</th>
-                <th class="table-cell">설명</th>
-                <th class="table-cell">등록일</th>
-            </tr>
-            </thead>
-            <tbody class="table-body">
+            <h2 class="mb-4">레시피 카테고리</h2>
+            <div class="row">
                 <c:forEach items="${categoryList}" var="row" varStatus="status">
-                    <tr class="table-row">
-                        <td class="table-cell"><input type="checkbox" class="checkBox" name="category_idx" value="${row.category_idx}"></td>
-                        <td class="table-cell">${row.category_name}</td>
-                        <td class="table-cell">${row.category_content}</td>
-                        <td class="table-cell">admin@example.com</td>
-                        <td class="table-cell">2023-01-01</td>
-                    </tr>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="이미지"
+                                 data-bs-toggle="modal" data-bs-target="#detailModal"
+                                 data-category-name="${row.category_name}" data-category-content="${row.category_content}">
+                            <div class="card-body">
+                                <h5 class="card-title">${row.category_name}</h5>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="category_idx${row.category_idx}" name="category_idx" value="${row.category_idx}">
+                                    <label class="form-check-label" for="category_idx${row.category_idx}">선택</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </c:forEach>
-                <c:if test="${categoryList[0] == null}">
-                    <tr class="table-row">
-                        <td class="table-cell" colspan="100" style="text-align: center;">카테고리를 추가해주세요.</td>
-                    </tr>
-                </c:if>
-            </tbody>
-        </table>
-        <div class="btn_warp">
-            <button class="btn cm_btn01 deleteCategoryBtn" type="button">삭제</button>
-            <button class="btn cm_btn02 addCategoryBtn" type="button">추가</button>
-        </div>
+            </div>
+            <div class="mt-3">
+                <button class="btn btn-danger deleteCategoryBtn" type="button">삭제</button>
+                <button class="btn btn-primary addCategoryBtn" type="button">추가</button>
+            </div>
         </form>
     </section>
 </main>
-<div class="modal hidden" id="addCategoryModal">
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="text" class="modal-title fs-5" id="categoryNameInput" value="">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea type="text" class="modal-body" id="categoryContentTextarea" maxlength="200"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<%--<div class="modal hidden" id="addCategoryModal">
     <div class="modal-content">
         <span class="modalClose">&times;</span>
         <h2 class="forgotModalTitle">
@@ -68,15 +84,22 @@
         </form>
     </div>
     <div class="background"></div>
-</div>
+</div>--%>
+
 
 <footer>
     <!-- Footer 내용 -->
 </footer>
 
 <script>
-    $('.addCategoryBtn').on('click', function(){
-        $('#addCategoryModal').removeClass('hidden');
+
+    $('#detailModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // 모달을 열게 한 버튼
+        var categoryName = button.data('category-name'); // data-category-name 속성 값
+        var categoryContent = button.data('category-content'); // data-category-content 속성 값
+        var modal = $(this);
+        modal.find('#categoryNameInput').val(categoryName);
+        modal.find('#categoryContentTextarea').val(categoryContent);
     });
 
     $('#categorySave').on('click', function(){
@@ -126,6 +149,7 @@
     });
 
 </script>
+
 <script src="../../../../source/js/common.js"></script>
 <%@ include file="../../../includeFiles/include-body.jsp" %>
 </body>

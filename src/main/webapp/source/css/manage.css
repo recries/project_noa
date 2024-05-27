@@ -1,7 +1,11 @@
+@import url(https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@1.0/nanumsquare.css);
+
+
 
 body {
     font-size: 16px;
     margin: 0;
+    font-family: 'NanumSquare', sans-serif;
 }
 
 li{
@@ -46,12 +50,6 @@ nav {
 
 .nav-links li a:hover {
     color: #ffc107;
-}
-
-input.input {
-    width: 200px;
-    height: 30px;
-    border: 1px solid #ccc;
 }
 
 button.button {
@@ -152,4 +150,22 @@ section.section h2.section-title {
         box-shadow: 0 0 10px 0 #6565ef inset, 0 0 10px 4px #6565ef;
         color: #6565ef;
     }
+}
+.modal-content input[type="text"],
+.modal-content textarea {
+    border: none; /* border 제거 */
+    width: 100%;
+    white-space: pre-wrap; /* 줄바꿈 적용 */
+    /* 추가적인 스타일링을 원하면 여기에 추가하세요 */
+}
+
+.modal-content {
+    max-height: calc(100vh - 200px); /* 화면 높이의 100%에서 200px만큼 빼고 설정 */
+    overflow-y: auto; /* 세로 스크롤 바 표시 */
+}
+
+/* input 요소의 내용이 전부 나오도록 크기 조절 */
+.modal-content input[type="text"] {
+    width: 100%; /* input 요소가 부모 요소에 꽉 차도록 설정 */
+    box-sizing: border-box; /* 패딩과 보더를 포함한 크기 설정 */
 }
