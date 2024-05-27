@@ -105,32 +105,6 @@ section.section h2.section-title {
     margin-top: 30px;
 }
 
-.btn {
-    box-sizing: border-box;
-    appearance: none;
-    background-color: transparent;
-    border: 2px solid #ef1313;
-    border-radius: 0.6em;
-    color: #ef1313;
-    cursor: pointer;
-    display: flex;
-    align-self: center;
-    font-size: 1rem;
-    line-height: 1;
-    margin: 10px;
-    padding: 0.6em 1.2em;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-
-    &:hover,
-    &:focus {
-        color: #fff;
-        outline: 0;
-    }
-}
 
 .cm_btn01 {
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;

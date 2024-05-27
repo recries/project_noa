@@ -20,7 +20,7 @@
 <main class="container mt-5">
     <section>
         <form id="deleteCategoryForm" method="post" target="hiddenframe">
-            <h2 class="mb-4">레시피 카테고리</h2>
+            <h2 class="mb-4">카테고리</h2>
             <div class="row">
                 <c:forEach items="${categoryList}" var="row" varStatus="status">
                     <div class="col-lg-3 col-md-4 mb-4">
@@ -29,10 +29,9 @@
                                  data-bs-toggle="modal" data-bs-target="#detailModal"
                                  data-category-name="${row.category_name}" data-category-content="${row.category_content}">
                             <div class="card-body">
-                                <h5 class="card-title">${row.category_name}</h5>
                                 <div class="form-check">
+                                    <label class="form-check-label" for="category_idx${row.category_idx}">${row.category_name}</label>
                                     <input type="checkbox" class="form-check-input" id="category_idx${row.category_idx}" name="category_idx" value="${row.category_idx}">
-                                    <label class="form-check-label" for="category_idx${row.category_idx}">선택</label>
                                 </div>
                             </div>
                         </div>
@@ -40,14 +39,14 @@
                 </c:forEach>
             </div>
             <div class="mt-3">
-                <button class="btn btn-danger deleteCategoryBtn" type="button">삭제</button>
-                <button class="btn btn-primary addCategoryBtn" type="button">추가</button>
+                <button class="btn btn-danger" id="deleteCategoryBtn" type="button">삭제</button>
+                <button class="btn btn-primary" id="addCategoryBtn" data-bs-toggle="modal" data-bs-target="#addCategoryModal" type="button">추가</button>
             </div>
         </form>
     </section>
 </main>
 
-<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -55,17 +54,33 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <textarea type="text" class="modal-body" id="categoryContentTextarea" maxlength="200"></textarea>
+                <textarea class="modal-body" id="categoryContentTextarea" maxlength="200"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" id="categoryUpdate" class="btn btn-primary">저장</button>
             </div>
         </div>
     </div>
 </div>
 
-
+<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="text" class="modal-title fs-5" id="newCategoryNameInput" value="" placeholder="카테고리 명">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea class="modal-body" id="newCategoryContentTextarea" maxlength="200"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" id="categoryInsert" class="btn btn-primary">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <%--<div class="modal hidden" id="addCategoryModal">
     <div class="modal-content">
@@ -102,7 +117,15 @@
         modal.find('#categoryContentTextarea').val(categoryContent);
     });
 
-    $('#categorySave').on('click', function(){
+    $('#addCategoryModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget); // 모달을 열게 한 버튼
+        var modal = $(this);
+        modal.find('#newCategoryNameInput').val('');
+        modal.find('#newCategoryContentTextarea').val('');
+    });
+
+
+    $('#categoryInsert').on('click', function(){
         if($('#category_name').val() === ''){
             alert('카테고리 이름을 작성해주세요.');
             return false;
