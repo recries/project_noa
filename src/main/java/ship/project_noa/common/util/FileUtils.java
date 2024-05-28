@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -14,9 +15,11 @@ import java.util.*;
 
 @Component("fileUtils")
 public class FileUtils {
+    @Value("${security.upload.path.root}")
     private String uploadPathRoot;
+    @Value("${security.upload.path.block}")
     private String uploadPathBlock;
-    public List<Map<String, Object>> saveUploadFile(HttpServletRequest request, String uploadPathDirectory,String fileNamePattern, String allowExt, boolean downloadBlock) throws Exception{
+    public List<Map<String, Object>> saveUploadFile(HttpServletRequest request, String uploadPathDirectory, String fileNamePattern, String allowExt, boolean downloadBlock) throws Exception{
         MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
         Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
         String filePath = "";

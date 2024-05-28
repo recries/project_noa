@@ -48,7 +48,19 @@
 
 <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
+        <form action="/common/uploadFile" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="upload_type" value="category" />
+        <input type="hidden" name="upload_allow_ext">
+        <input type="file" name="file" id="file_logo" ext_filter="jpg,jpeg,png,gif" value="" style="display:none;">
         <div class="modal-content">
+            <div class="preview_cont imageView">
+                <span class="img_wrap">
+                    <img src="" alt="선택된 이미지" class="preview">
+                </span>
+                <label for="" class="btn btn-primary logo_upload_btn">이미지 업로드</label>
+                <input type="hidden" name="category_image" value="">
+                <p class="cm_highlight logo_text">※ 대용량 이미지는 업로드가 불가합니다. <br>(세로 150px 이하, 이미지 파일, 1M이하)</p>
+            </div>
             <div class="modal-header">
                 <input type="text" class="modal-title fs-5" id="categoryNameInput" value="">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -61,6 +73,7 @@
                 <button type="button" id="categoryUpdate" class="btn btn-primary">저장</button>
             </div>
         </div>
+        </form>
     </div>
 </div>
 
@@ -107,6 +120,10 @@
 </footer>
 
 <script>
+
+    $('.logo_upload_btn').click(function() {
+        $('#file_logo').click();
+    });
 
     $('#detailModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget); // 모달을 열게 한 버튼

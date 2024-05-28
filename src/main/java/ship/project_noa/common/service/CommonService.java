@@ -2,6 +2,7 @@ package ship.project_noa.common.service;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
 import ship.project_noa.common.util.FileUtils;
 
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@Service
 public class CommonService {
     @Resource(name="fileUtils")
     private FileUtils fileUtils;
@@ -28,9 +30,9 @@ public class CommonService {
         String dTime = formatter.format(currentTime);
 
         switch (uploadType){
-            case "category_img":
-                uploadPathDirectory = "manage" + File.separator + "logo" + File.separator;
-                fileNamePattern = "category_img";
+            case "category":
+                uploadPathDirectory = "manage" + File.separator + "category" + File.separator;
+                fileNamePattern = "categoryImg";
                 allowExt = ".jpg.jpeg.png.gif";
                 break;
             

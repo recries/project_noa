@@ -35,10 +35,11 @@ public class LoginServiceImp implements LoginService {
     public List<AdminDTO> selectAdminList() throws Exception {
         return loginDAO.adminList();
     }
-
+    @Transactional
     @Override
     public boolean selectLoginAdmin(AdminDTO dto, HttpServletRequest request, HttpSession session) throws Exception {
         dto.encryptPrivacy();
+        System.out.println(loginDAO.selectLoginAdmin(dto));
         try {
             Optional<AdminDTO> result = loginDAO.selectLoginAdmin(dto);
 
