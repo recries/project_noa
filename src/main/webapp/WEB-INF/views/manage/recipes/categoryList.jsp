@@ -13,7 +13,7 @@
 </style>
 <%@ include file="../../../includeFiles/include_source.jsp"  %>
 <link type="text/css" rel="stylesheet" href="../../../../source/css/manage.css">
-
+<script src="https://malsup.github.io/jquery.form.js"></script>
 <body>
 <%@ include file="../../includeJsp/manageHeader.jsp" %>
 <body>
@@ -49,30 +49,35 @@
 <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <form action="/common/uploadFile" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="upload_type" value="category" />
-        <input type="hidden" name="upload_allow_ext">
-        <input type="file" name="file" id="file_logo" ext_filter="jpg,jpeg,png,gif" value="" style="display:none;">
-        <div class="modal-content">
-            <div class="preview_cont imageView">
-                <span class="img_wrap">
-                    <img src="" alt="선택된 이미지" class="preview">
-                </span>
-                <label for="" class="btn btn-primary logo_upload_btn">이미지 업로드</label>
-                <input type="hidden" name="category_image" value="">
-                <p class="cm_highlight logo_text">※ 대용량 이미지는 업로드가 불가합니다. <br>(세로 150px 이하, 이미지 파일, 1M이하)</p>
+            <input type="hidden" name="upload_type" value="category" />
+            <input type="hidden" name="upload_allow_ext">
+            <input type="file" name="file" id="categoryImage" ext_filter="jpg,jpeg,png,gif" value="" style="display:none;">
+            <div class="modal-content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="imageView">
+                            <span class="img_wrap">
+                                <img src="" alt="image" class="rounded float-start previewImg">
+                            </span>
+                            <label for="categoryImage" class="btn btn-primary logo_upload_btn">이미지 업로드</label>
+                            <input type="hidden" name="categoryImageSrc" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="modal-header">
+                            <input type="text" class="modal-title fs-5" id="categoryNameInput" value="">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <textarea class="modal-body" id="categoryContentTextarea" maxlength="200"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                            <button type="button" id="categoryUpdate" class="btn btn-primary">저장</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-header">
-                <input type="text" class="modal-title fs-5" id="categoryNameInput" value="">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <textarea class="modal-body" id="categoryContentTextarea" maxlength="200"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" id="categoryUpdate" class="btn btn-primary">저장</button>
-            </div>
-        </div>
         </form>
     </div>
 </div>
@@ -121,8 +126,53 @@
 
 <script>
 
-    $('.logo_upload_btn').click(function() {
-        $('#file_logo').click();
+
+    
+    $('#categoryImage').change(function() {
+        var upload_ext_filter = $(this).attr('ext_filter');
+        var fileExt = $(this).val().substring($(this).val().lastIndexOf('.') + 1).toLowerCase();
+        var maxSize = 1024 * 1024;
+        if(upload_ext_filter == ''){
+            return false;
+        }else{
+            if (upload_ext_filter.indexOf(fileExt) <= -1) {
+                alert('지원하지 않는 파일 형식입니다.\n' + upload_ext_filter + ' 형식의 파일만 업로드가 가능 합니다.');
+                $(this).val('');
+                return false;
+            }
+
+            if(this.files[0].size > maxSize){
+                alert('이미지 사이즈는 1MB 이내로 등록 가능합니다.');
+                return false;
+            }
+        }
+
+        $(this).parents("form:first").ajaxForm({
+            dataType: 'json'
+            , success : function(json){
+
+                if (json.list.length > 0) {
+                    var date = new Date();
+                    var datetime = String(date.getHours()) + String(date.getMinutes()) + String(date.getSeconds());
+
+                    $('[name="categoryImageSrc"]').val(json.list[0].save_file_name);
+
+                    $('.previewImg').find('img').attr('src', '/resources/upload/' + json.list[0].save_file_name + '?' + datetime);
+                    $('.logo_text').remove();
+                    alert("파일이 업로드 되었습니다.");
+
+                }else{
+
+                    alert("업로드에 실패하였습니다.");
+
+                }
+            }
+            , error : function(a, b, c){
+                alert('업로드 중 오류가 발생 하였습니다.');
+            }
+        }).submit();
+
+        $(this).replaceWith($(this).clone(true));
     });
 
     $('#detailModal').on('show.bs.modal', function(event) {
