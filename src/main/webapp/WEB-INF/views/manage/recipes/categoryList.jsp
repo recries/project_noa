@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>노아</title>
+    <title>projectNoA</title>
 </head>
 <style type="text/css">
     .card-text{
